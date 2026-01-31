@@ -23,7 +23,7 @@ if ($status === 'deleted') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sach san pham</title>
+    <title>Chi tiet san pham</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -31,57 +31,48 @@ if ($status === 'deleted') {
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
                 <div>
-                    <h1 class="h3 mb-1">Danh sach san pham</h1>
-                    <div class="text-muted">Quan ly va theo doi san pham hien co.</div>
+                    <h1 class="h3 mb-1">Chi tiet san pham</h1>
+                    <div class="text-muted">Thong tin chi tiet san pham.</div>
                 </div>
-                <a href="index.php?page=product-add" class="btn btn-primary">Them san pham</a>
+                <a href="index.php?page=product-list" class="btn btn-outline-secondary">Quay lai danh sach</a>
             </div>
         </div>
 
-        <?php if (empty($products)): ?>
-            <div class="alert alert-warning">Chua co san pham nao.</div>
+        <?php if (empty($product)): ?>
+            <div class="alert alert-warning">Khong tim thay san pham.</div>
         <?php else: ?>
+            <?php
+            $id = $product['id'] ?? '';
+            $name = $product['name'] ?? '';
+            $price = $product['price'] ?? '';
+            $avatar = $product['avatar'] ?? '';
+            $description = $product['description'] ?? '';
+            ?>
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover align-middle mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th style="width: 70px;">ID</th>
-                                    <th>Ten</th>
-                                    <th style="width: 140px;">Avatar</th>
-                                    <th style="width: 140px;">Gia</th>
-                                    <th style="width: 220px;">Hanh dong</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($products as $product): ?>
-                                    <?php
-                                    $id = $product['id'] ?? '';
-                                    $name = $product['name'] ?? '';
-                                    $price = $product['price'] ?? '';
-                                    $avatar = $product['avatar'] ?? '';
-                                    ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars((string)$id, ENT_QUOTES, 'UTF-8'); ?></td>
-                                        <td><?php echo htmlspecialchars((string)$name, ENT_QUOTES, 'UTF-8'); ?></td>
-                                        <td>
-                                            <?php if ($avatar !== ''): ?>
-                                                <img src="<?php echo htmlspecialchars((string)$avatar, ENT_QUOTES, 'UTF-8'); ?>" alt="San pham" style="height: 48px;" class="img-thumbnail">
-                                            <?php else: ?>
-                                                <span class="text-muted">Khong co</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td><?php echo htmlspecialchars(format_price($price), ENT_QUOTES, 'UTF-8'); ?></td>
-                                        <td>
-                                            <a href="index.php?page=product-detail&id=<?php echo htmlspecialchars((string)$id, ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-sm btn-outline-secondary">Chi tiet</a>
-                                            <a href="index.php?page=product-edit&id=<?php echo htmlspecialchars((string)$id, ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-sm btn-outline-primary">Sua</a>
-                                            <button type="button" class="btn btn-sm btn-outline-danger js-delete-btn" data-delete-url="index.php?page=product-delete&id=<?php echo htmlspecialchars((string)$id, ENT_QUOTES, 'UTF-8'); ?>">Xoa</button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                    <div class="row g-4 align-items-start">
+                        <div class="col-md-4">
+                            <?php if ($avatar !== ''): ?>
+                                <img src="<?php echo htmlspecialchars((string)$avatar, ENT_QUOTES, 'UTF-8'); ?>" alt="San pham" class="img-fluid rounded shadow-sm">
+                            <?php else: ?>
+                                <div class="text-muted">Khong co hinh anh</div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="col-md-8">
+                            <h2 class="h4 mb-3"><?php echo htmlspecialchars((string)$name, ENT_QUOTES, 'UTF-8'); ?></h2>
+                            <div class="d-flex flex-wrap gap-3 mb-3">
+                                <div class="badge text-bg-light border">ID: <?php echo htmlspecialchars((string)$id, ENT_QUOTES, 'UTF-8'); ?></div>
+                                <div class="badge text-bg-primary">Gia: <?php echo htmlspecialchars(format_price($price), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div>
+                                <div class="fw-semibold mb-2">Mo ta</div>
+                                <p class="mb-0"><?php echo htmlspecialchars((string)$description, ENT_QUOTES, 'UTF-8'); ?></p>
+                            </div>
+                            <div class="mt-4 d-flex gap-2">
+                                <a href="index.php?page=product-edit&id=<?php echo htmlspecialchars((string)$id, ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-outline-primary">Sua san pham</a>
+                                <button type="button" class="btn btn-outline-danger js-delete-btn" data-delete-url="index.php?page=product-delete&id=<?php echo htmlspecialchars((string)$id, ENT_QUOTES, 'UTF-8'); ?>">Xoa san pham</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ class HomeController
     public function index(): void
     {
         $studentInfo = (new Student())->getInfo();
-        $products = (new Product())->getAllProducts();
+        $products = (new Product())->all();
 
         include __DIR__ . '/../../views/home.php';
     }
